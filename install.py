@@ -38,4 +38,8 @@ def setup():
             orders=i, is_default=is_default
         )
         i += 1
-    return {'code': 1, 'message': 'ok'}
+    return True
+    
+    
+def uninstall()：
+    return True
