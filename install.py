@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 from django.conf import settings
@@ -38,8 +39,12 @@ def setup():
             orders=i, is_default=is_default
         )
         i += 1
+    init_path = settings.APP_FILES / 'envs_python'
+    if not init_path.exists():
+        init_path.mkdir()
+    with open(init_path / 'init', 'w') as f:
+        f.write('')
     return True
-    
-    
+
 def uninstall():
     return True

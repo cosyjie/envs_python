@@ -2,6 +2,7 @@ import subprocess
 
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.shortcuts  import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView, RedirectView
 from django.views.generic.list import ListView
@@ -19,12 +20,20 @@ class EnvsPythonMixin(EnvironmentMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = 'envs_python'
+        context['is_init'] = False
+        init_file = settings.APP_FILES / 'envs_python' / 'init'
+        if init_file.exists():
+            context['is_init'] = True
         return context
 
+def python_init(request):
+    from .install import setup
+    setup()
+    return redirect('module_envs:envs_python:list')
 
 class PythonListView(EnvsPythonMixin, ListView):
     queryset = PythonInfo.objects.all()
-    ordering = 'orders'
+    ordering = ['orders', 'is_install']
     template_name = 'envs_python/python_list.html'
 
     def get_context_data(self, **kwargs):

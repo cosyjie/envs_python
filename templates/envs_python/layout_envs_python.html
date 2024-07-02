@@ -1,0 +1,16 @@
+{% extends 'layout_panel.html' %}
+
+{% block pagecontent %}
+    {% if is_init %}
+{% block content %}{% endblock %}
+    {% else %}
+<div class="card">
+<div class="card-body">
+    <p>当前模块需要初始化数据，请点击按钮进行初始化：</p>
+    <p>
+        <a href="{% url 'module_envs:envs_python:init' %}" class="btn btn-success">初始化数据</a>
+    </p>
+</div>
+</div>
+    {% endif %}
+{% endblock %}

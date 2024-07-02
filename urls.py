@@ -6,6 +6,7 @@ from . import views
 app_name = 'envs_python'
 
 urlpatterns = [
+    path('init/', login_required(views.python_init), name='init'),
     path('list/', login_required(views.PythonListView.as_view()), name='list'),
     path('install/<int:pk>/', login_required(views.PythonInstallView.as_view()), name='install'),
     path('uninstall/<int:pk>/', login_required(views.UninstallView.as_view()), name='uninstall'),
