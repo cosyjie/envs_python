@@ -1,0 +1,24 @@
+{% extends 'layout_panel.html' %}
+
+{% block pagecontent %}
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered table-sm table-hover">
+            <thead class="thead-light"><tr><th>源名称</th><th>操作</th></tr></thead>
+            <tbody>
+{% for url,info in url_list.items %}
+            <tr>
+                <td>{{ info.title }}</td>
+                <td>
+                    {% if info.url == current_url %}<span class="text-success text-bold">默认</span>
+{% else %}<a href="{% url 'module_envs:envs_python:pypi_conf' info.mark %}" class="text-danger">设为默认</a>
+                    {% endif %}
+                </td>
+            </tr>
+{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'layout_panel.html' %}
+
+{% block js_code %}
+<script type="text/javascript">
+layui.use(function(){
+  var layer = layui.layer;
+  var $ = layui.$;
+
+  $('a.btn_del').click(function(e) {
+        var href = $(this).attr('action-href');
+        var version = $(this).attr('version');
+        layer.confirm(
+            '确定要卸载 Python ' + version + ' 吗？', {icon: 3},
+            function(){
+                location.href=href;
+            });
+    })
+})
+</script>
+{% endblock %}
+
+{% block pagecontent %}
+    {% include 'include_messages.html' %}
+<div class="card">
+    <div class="card-header">
+        <div class="card-tools">
+            <a href="{% url 'module_envs:envs_python:pypi_list' %}" class="btn btn-default">配置pip包安装源</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr><th>版本名称</th><th>安装状态</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+{% for py in object_list %}
+    <tr>
+        <td>{{ py.version }}</td>
+        <td>
+            {% if py.is_install %}<span class="text-success">已安装</span>
+            {% else %}<span class="text-danger">未安装</span>
+            {% endif %}
+        </td>
+        <td>
+            {% if py.is_default or py.is_used %}已使用
+            {% elif py.is_install %}
+<a href="javascript:;" action-href="{% url 'module_envs:envs_python:uninstall' py.pk%}" version="{{ py.version }}" class="text-danger btn_del">卸载</a>
+            {% else %}<a href="{% url 'module_envs:envs_python:install' py.pk %}" class="text-success">安装</a>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
