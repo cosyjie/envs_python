@@ -41,5 +41,5 @@ def setup():
     return True
     
     
-def uninstall()：
+def uninstall():
     return True
