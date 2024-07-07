@@ -46,5 +46,9 @@ def setup():
         f.write('')
     return True
 
+
 def uninstall():
+    init_path = settings.APP_FILES / 'envs_python' / 'init'
+    if init_path.exists():
+        init_path.unlink()
     return True
