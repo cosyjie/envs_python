@@ -9,12 +9,6 @@ from .models import PythonInfo
 
 
 def setup():
-    print('开始迁移')
-    result = subprocess_run(subprocess,
-                            f'{settings.PYENV_DEFAULT_PYTHON_RUN} {settings.BASE_DIR}/manage.py migrate envs_python'
-                            )
-    print(result)
-
     target_major, target_minor = 3, 8
     get_version = subprocess_run(subprocess, f'{settings.PYENV_RUN_FILE} install --list').stdout.splitlines()
     versions = []
